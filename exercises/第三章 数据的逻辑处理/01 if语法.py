@@ -10,5 +10,5 @@ if a+b>c and b+c>a and a+c>b:
     else:
         print("该三角形是普通三角形")
 else:
-    print(f"{a} {b} {c}这三边无法构成一个三角形")
+    print(f"{a} {b} {c}这三边无法构成三角形")
 
