@@ -1,0 +1,25 @@
+s=[1,2,3,4,5,6]
+print(s)
+#末尾添加元素
+s.append(7)
+print(s)
+#指定索引前插入元素
+s.insert(1,1.5)
+s.insert(1,1.5)
+print(s)
+#去除找到的第一个指定元素
+s.remove(1.5)
+print(s)
+s.remove(1.5)
+print(s)
+#删除列表中指定位置的元素 没写默认删除最后一个
+s.pop()
+print(s)
+s.append(0)
+print(s)
+#列表中元素类型一致时，排序
+s.sort()
+print(s)
+#反转列表元素
+s.reverse()
+print(s)
