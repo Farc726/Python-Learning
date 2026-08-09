@@ -71,28 +71,53 @@ while True:
                     s_chinese.append(s[name]["chinese"])
                     s_math.append(s[name]["math"])
                     s_English.append(s[name]["English"])
-                print(f"语文最高分为：{max(s_chinese)},平均分为:{sum(s_chinese)/len(s_chinese)}")
-                print(f"数学最高分为：{max(s_math)},1平均分为:{sum(s_math)/len(s_math)}")
-                print(f"英语最高分为：{max(s_English)},平均分为:{sum(s_English)/len(s_English)}")
+#平均分保留2位小数 防止输出一长串
+                print(f"语文最高分为：{max(s_chinese)},平均分为:{sum(s_chinese)/len(s_chinese):.2f}")
+                print(f"数学最高分为：{max(s_math)},平均分为:{sum(s_math)/len(s_math):.2f}")
+                print(f"英语最高分为：{max(s_English)},平均分为:{sum(s_English)/len(s_English):.2f}")
+                
+                # for name in s:
+                #     if s[name]["chinese"]==max(s_chinese):
+                #         c_max=name
+                #     if s[name]["chinese"]==min(s_chinese):
+                #         c_min=name
+                #     if s[name]["math"]==max(s_math):
+                #         m_max=name
+                #     if s[name]["math"]==min(s_math):
+                #         m_min=name
+                #     if s[name]["English"]==max(s_English):
+                #         e_max=name
+                #     if s[name]["English"]==min(s_English):
+                #         e_min=name
+#修改 若出现多人并列的情况;
+                c_max=[]
+                c_min=[]
+                m_max=[]
+                m_min=[]
+                e_max=[]
+                e_min=[]
+                
                 for name in s:
                     if s[name]["chinese"]==max(s_chinese):
-                        c_max=name
+                        c_max.append(name)
                     if s[name]["chinese"]==min(s_chinese):
-                        c_min=name
+                        c_min.append(name)
                     if s[name]["math"]==max(s_math):
-                        m_max=name
+                        m_max.append(name)
                     if s[name]["math"]==min(s_math):
-                        m_min=name
+                        c_min.append(name)
                     if s[name]["English"]==max(s_English):
-                        e_max=name
+                        e_max.append(name)
                     if s[name]["English"]==min(s_English):
-                        e_min=name
-                print(f"取得语文最高分的同学为：{c_max}")
-                print(f"取得语文最低分的同学为：{c_min}")
-                print(f"取得数学最高分的同学为：{m_max}")
-                print(f"取得数学最低分的同学为：{m_min}")
-                print(f"取得英语最高分的同学为：{e_max}")
-                print(f"取得英语最低分的同学为：{e_min}")
+                        c_min.append(name)
+                
+# 注意:打印格式 问了AI------"连接符".join(序列)---join不接受 int/float
+                print(f"取得语文最高分的同学为：{'、'.join(c_max)}")
+                print(f"取得语文最低分的同学为：{'、'.join(c_min)}")
+                print(f"取得数学最高分的同学为：{'、'.join(m_max)}")
+                print(f"取得数学最低分的同学为：{'、'.join(m_max)}")
+                print(f"取得英语最高分的同学为：{'、'.join(e_max)}")
+                print(f"取得英语最低分的同学为：{'、'.join(e_max)}")
                 
                 
                 
