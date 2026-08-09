@@ -10,10 +10,12 @@
 # 现在是s={name:{"chinese":chinese,"math":math,"English",English}}   6到底怎么做不问AI明天自己好好想一下！！
 print("欢迎使用教务管理系统~")
 s={}
-while True:
-    menu="""#############################【菜单】#############################
+menu="""#############################【菜单】#############################
 # 1. 添加学生信息  2. 修改学生信息  3. 删除学生信息  4. 查询学生信息  5. 列出所有学生  6. 统计班级成绩  7. 退出系统   #
 ################################################################"""
+
+while True:
+    print(menu)
     order=input("请选择您将要执行的操作(1~7):")
     match order:
         case "1":
@@ -50,32 +52,49 @@ while True:
                         print("该学生信息不在系统中")
             else:
                 print("姓名\t语文\t数学\t英语")
-                print(f"{name}\t{s[name]["chinese"]}\t{s[name]["math"]}\t{s[name]["English"]}\t")
+                print(f"{name}\t{s[name]['chinese']}\t{s[name]['math']}\t{s[name]['English']}\t")
         case "5":
             if len(s)==0:
                 print("系统中没有任何一位同学的信息")
             else:
+                print("姓名\t语文\t数学\t英语")
                 for name in s:
-                    print("姓名\t语文\t数学\t英语")
-                    print(f"{name}\t{s[name]["chinese"]}\t{s[name]["math"]}\t{s[name]["English"]}\t")  
-        # case "6":
-        #       if len(s)==0:
-        #              print("系统中没有任何一位同学的信息")
-        #       else:
-        #            for name in s:
-        #                 s_chinese=[]
-        #                 s_chinese.append(s[name]["chinese"].values())
-        #                 s_math=[]
-        #                 s_math.append(s[name]["math"].values())
-        #                 s_English=[]
-        #                 s_English.append(s[name]["English"].values())
-        #                 print("最高分\t最低分\t平均分 (语文)")
-        #                 print(f"{max(s_chinese)}\t{min(s_chinese)}\t{sum(s_chinese)/len(s_chinese)}")
-
-        #             for name in s:
-        #                 if s[name]["chinese"]==max(s_chinese):
-        #                      print(f"取得语文最高分的同学为：")
-                    
+                    print(f"{name}\t{s[name]['chinese']}\t{s[name]['math']}\t{s[name]['English']}\t")
+        case "6":# 6．统计班级成绩：统计班级语文、数学、英语成绩的最高分、最低分、平均分，以及语文、数学、英语最高分和最低分的学员姓名。
+            if(len(s)==0):
+                print("系统中没有任何一位同学的信息")
+            else:
+                s_chinese=[]
+                s_math=[]
+                s_English=[]
+                for name in s:
+                    s_chinese.append(s[name]["chinese"])
+                    s_math.append(s[name]["math"])
+                    s_English.append(s[name]["English"])
+                print(f"语文最高分为：{max(s_chinese)},平均分为:{sum(s_chinese)/len(s_chinese)}")
+                print(f"数学最高分为：{max(s_math)},1平均分为:{sum(s_math)/len(s_math)}")
+                print(f"英语最高分为：{max(s_English)},平均分为:{sum(s_English)/len(s_English)}")
+                for name in s:
+                    if s[name]["chinese"]==max(s_chinese):
+                        c_max=name
+                    if s[name]["chinese"]==min(s_chinese):
+                        c_min=name
+                    if s[name]["math"]==max(s_math):
+                        m_max=name
+                    if s[name]["math"]==min(s_math):
+                        m_min=name
+                    if s[name]["English"]==max(s_English):
+                        e_max=name
+                    if s[name]["English"]==min(s_English):
+                        e_min=name
+                print(f"取得语文最高分的同学为：{c_max}")
+                print(f"取得语文最低分的同学为：{c_min}")
+                print(f"取得数学最高分的同学为：{m_max}")
+                print(f"取得数学最低分的同学为：{m_min}")
+                print(f"取得英语最高分的同学为：{e_max}")
+                print(f"取得英语最低分的同学为：{e_min}")
+                
+                
                 
         case "7":
             print("感谢使用~ 成功退出系统~")
