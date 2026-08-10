@@ -105,11 +105,11 @@ while True:
                     if s[name]["math"]==max(s_math):
                         m_max.append(name)
                     if s[name]["math"]==min(s_math):
-                        c_min.append(name)
+                        m_min.append(name)
                     if s[name]["English"]==max(s_English):
                         e_max.append(name)
                     if s[name]["English"]==min(s_English):
-                        c_min.append(name)
+                        e_min.append(name)
                 
 # 注意:打印格式 问了AI------"连接符".join(序列)---join不接受 int/float
                 print(f"取得语文最高分的同学为：{'、'.join(c_max)}")
