@@ -98,7 +98,7 @@ def get_subject_stat(s,sub_key):
 # 题目还要去与姓名匹配 那可以再有一个姓名与分数在一起的
     score_list=[]# 存放该科所有分数
     name_score={}# 存放姓名与分数的字典
-    for name,zidian in s.items():
+    for name,zidian in s.items():#s.items()将字典s的键和值打包成元组（键，值）在此处为（姓名，{科目：分数，科目：分数}）   同时注意如何接收
         score=zidian[sub_key]
         score_list.append(score)
         name_score[name]=score
@@ -106,7 +106,7 @@ def get_subject_stat(s,sub_key):
     max_val=max(score_list)
     min_val=min(score_list)
     avg_val=round(sum(score_list)/len(score_list),1)
-    #用列表推导式 返回取得最值的成员名单
+    #用列表推导式 返回取得最值的成员名单-----在此处你有一点经验了 就是当你想要的某个新列表的元素来源于某个旧的数据容器时 可以用 ！列表推导式！简洁易读
     max_names=[name for name in name_score if max_val==name_score[name]]
     min_names=[name for name in name_score if min_val==name_score[name]]
     
@@ -121,10 +121,11 @@ def calc_s():
     if len(infor_s)==0:
         print("该系统中无任何学生信息")
     else:
+        #接收函数返回的元组
         chinese_infor=get_subject_stat(infor_s,"chinese")
         math_infor=get_subject_stat(infor_s,"math")
         English_infor=get_subject_stat(infor_s,"English")
-        
+        #打印输出
         print_infor(chinese_infor,"语文")
         print_infor(math_infor,"数学")
         print_infor(English_infor,"英语")
