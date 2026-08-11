@@ -7,7 +7,7 @@
 """
 #设置参数
 #小细节 若没有优惠券积分免运费---不传递参数-->可设置默认参数0
-def calc_order_cost(*args,coupon=0,score=0,express=0):
+def calc_order_cost(*args,coupon: int=0,score: int=0,express: float=0):
 #1.计算商品金额（这里用列表来存放每个商品的总金额后sum）
     total_cost=[s[1]*s[2] for s in args]
     total=sum (total_cost)
