@@ -31,6 +31,7 @@ for line in f:
 f.close()
 
 #with open() as f +for 循环  好在 执行完后会自动关闭文件
+#当然 不与for结合也完全可以
 with open("D:\Python-Project\测试8.11.txt","r",encoding="UTF-8")as f:
     for line in f:
         print(line)
