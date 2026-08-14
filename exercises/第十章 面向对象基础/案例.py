@@ -13,7 +13,7 @@ class Student:
         self.s_english=english
     
     def __str__(self):
-        return f"姓名：{self.s_name}|语文：{self.s_chinese}|数学：{self.s_math}|英语：{self.s_english}"
+        return f"姓名：{self.s_name} | 语文：{self.s_chinese} | 数学：{self.s_math} | 英语：{self.s_english}"
     def update_s(self,chinese=None,math=None,english=None):
         if chinese is not None:
             self.s_chinese=chinese
@@ -23,17 +23,18 @@ class Student:
             self.s_english=english
             
             
-              
-        
-
+# 教务系统类
 class EduManangment:
-    menu="""# 1．添加学生成绩：根据输入的学生姓名、语文成绩、数学成绩、英语成绩，记录在系统中
-        # 2．修改学生成绩：根据输入的学生姓名，修改对应的学生成绩
-        # 3．删除学生成绩：根据输入的学生姓名，删除对应的学生成绩
-        # 4．查询指定学生成绩：根据输入的学生姓名，查找对应的学生成绩，并输出
-        # 5．展示全部学生成绩：展示出系统中所有学生的成绩"""
+    version="3.0"
+    menu="""
+            # 1.添加学生成绩
+            # 2.修改学生成绩
+            # 3.删除学生成绩
+            # 4.查询指定学生成绩
+            # 5展示全部学生成绩
+            # 6.退出系统"""
 # 教务系统中储存了大量的学生信息----其中有一个学生信息的列表meimei添加学生信息就向列表中加元素（这里的元素是什么呢？）是一个student类
-    def __init__(self):
+    def __init__(self):#用于初始化这个类
         self.student_list=[]
         
 # 根据功能来决定类的内部构造
@@ -78,11 +79,14 @@ class EduManangment:
 # 这只是改变了循环中s的指向 并没改变原列表中储存的Student数据
 # 要么用s.s_chinese=chinese修改 要么就zaiStudent中定义专门的修改函数更直观高效一点
                     s.update_s(chinese,math,english)
+                    print("修改操作执行完毕~")
                 else:
                      print("请输入正确的成绩数据:(0~100)")
-            else:
-                print("教务系统中无该学生信息~")
-            print("修改操作执行完毕~")
+                     return
+        print("教务系统中无该学生成绩")
+        print("修改操作执行完毕~")
+            
+            
 
 # 3．删除学生成绩：根据输入的学生姓名，删除对应的学生成绩
     def delete_s(self):
@@ -117,36 +121,37 @@ class EduManangment:
 
     def show_menu(self):
         print(self.menu)
-
-
-
-
-print("欢迎使用教务管理系统~~ 请按菜单要求进行操作")
-e1=EduManangment()   
-
-while True:
-    e1.show_menu()
-    order=input("请输入您要进行的操作：")
+# 运行系统
+    def run(self):
+        print(f"欢迎使用教务管理系统{self.version}~~ 请按菜单要求进行操作")
+        while True:
+            self.show_menu()
+            order=input("请输入您要进行的操作：")
     
-    match order:
-        case "1":
-            e1.add_s()
-        case "2":
-            e1.change_s()
-        case "3":
-            e1.delete_s()
-        case "4":
-            e1.search_s()
-        case "5":
-            e1.show_s()
-        case _:
-            break
+            match order:
+                case "1":
+                    self.add_s()
+                case "2":
+                    self.change_s()
+                case "3":
+                    self.delete_s()
+                case "4":
+                    self.search_s()
+                case "5":
+                    self.show_s()
+                case "6":
+                    print("您已退出系统~")
+                    break
+                case _:
+                    print("请输入正确的操作编号~")
+                    
+                    
+# 测试
+if __name__=="__main__":
+    edu_mangement=EduManangment()
+    edu_mangement.run()
+
             
-    
 
-            
+  
 
-        
-
-
-    
