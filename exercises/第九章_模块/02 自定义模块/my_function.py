@@ -1,6 +1,6 @@
 #__all__卸载模块里面！
 # 关于*
-__all__=["function1","QUESTION"]
+#__all__=["function1","QUESTION"]
 # 常量
 PI=3.1415926
 QUESTION="你该如何度过暑假~"
