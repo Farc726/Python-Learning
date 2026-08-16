@@ -4,6 +4,10 @@
 # 3．删除学生成绩：根据输入的学生姓名，删除对应的学生成绩
 # 4．查询指定学生成绩：根据输入的学生姓名，查找对应的学生成绩，并输出
 # 5．展示全部学生成绩：展示出系统中所有学生的成绩
+
+# json不允许写入自己写的类的实例对象 和 函数
+# 所以我们要把类转为字典 在Students写转字典函数
+# 又因为具体功能中的分析都基于类（再此相当于练习了） 再把从json读到的（在这里是字典）转回为类（结合类的初始化）
 import json
 
 class Student:
@@ -23,6 +27,9 @@ class Student:
             self.s_math=math
         if english is not None:
             self.s_english=english
+    # 将列表中的对象转为字典才能写入json文件 所以在此处增加此方法
+    def to_dict(self):
+        return{"s_name":self.s_name,"s_chinese":self.s_chinese,"s_math":self.s_math,"s_english":self.s_english}
             
             
 # 教务系统类
@@ -40,8 +47,10 @@ class EduManangment:
         self.student_list=[]
 # 用于文件写入  
     def update_data(self):
+        # 保存：把Student对象全部转成普通字典列表，再写入json
+        dict_list=[stu.to_dict() for stu in self.student_list]
         with open(r"D:\Python-Project\students_v5.json","w",encoding="UTF-8") as f:
-            json.dump(self.student_list,f,ensure_ascii=False)
+            json.dump(dict_list,f,ensure_ascii=False)
         
 # 功能一：添加学生成绩：根据输入的学生姓名、语文成绩、数学成绩、英语成绩，记录在系统中
     def add_s(self):
@@ -123,7 +132,12 @@ class EduManangment:
     def run(self):
         try:
             f=open(r"D:\Python-Project\students_v5.json","r",encoding="UTF-8")
-            self.student_list=json.load(f)
+            # 从json文件中读取数据此时还是字典 所以 再此处要再次转为类
+            data=json.load(f)
+            self.student_list=[]
+            for d in data:
+                new_stu=Student(d["s_name"], d["s_chinese"], d["s_math"], d["s_english"])
+                self.student_list.append(new_stu)
             f.close()
         except Exception:
             self.student_list=[]
