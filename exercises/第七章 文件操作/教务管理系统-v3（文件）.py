@@ -30,8 +30,11 @@ except Exception:
 
 # 进行添加修改删除操作后要更新文件内容--函数
 def update_data():
-    with open("D:\Python-Project\student.json","w",encoding="UTF-8") as f:
-        json.dump(infor_s,f,ensure_ascii=False)
+    #r表示传入原始数据 防止被无认为是转义字符
+    with open(r"D:\Python-Project\student.json","w",encoding="UTF-8") as f:
+# ensure_ascii=False:直接把中文原字写入文件
+# indent=4：开启格式化换行，每一层缩进 4 个空格，输出排版整齐
+        json.dump(infor_s,f,ensure_ascii=False,indent=4)
 
 # 核心功能实现函数的编写
 # 1．添加学生信息：根据提示录入学生姓名、语文、数学、英语成绩，录入完成保存到系统中。
@@ -145,7 +148,7 @@ def calc_s():
         print_infor(chinese_infor,"语文")
         print_infor(math_infor,"数学")
         print_infor(English_infor,"英语")
-
+        print("统计操作执行完毕~")
 
 #1.写出整体框架 (靠循环控制输入输出 ==7 -->跳出循环)  (用match case 表选项)
 while True:
