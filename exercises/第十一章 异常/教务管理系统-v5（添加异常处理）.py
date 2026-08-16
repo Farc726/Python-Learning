@@ -4,6 +4,8 @@
 # 3．删除学生成绩：根据输入的学生姓名，删除对应的学生成绩
 # 4．查询指定学生成绩：根据输入的学生姓名，查找对应的学生成绩，并输出
 # 5．展示全部学生成绩：展示出系统中所有学生的成绩
+import json
+
 class Student:
 # 属性： name chinese math English
     def __init__(self,name,chinese,math,english):
@@ -36,8 +38,11 @@ class EduManangment:
 
     def __init__(self):#用于初始化这个类
         self.student_list=[]
+# 用于文件写入  
+    def update_data(self):
+        with open(r"D:\Python-Project\students_v5.json","w",encoding="UTF-8") as f:
+            json.dump(self.student_list,f,ensure_ascii=False)
         
-
 # 功能一：添加学生成绩：根据输入的学生姓名、语文成绩、数学成绩、英语成绩，记录在系统中
     def add_s(self):
 
@@ -55,6 +60,7 @@ class EduManangment:
             self.student_list.append(stu)
         else:
             print("请输入正确的成绩数据:(0~100)")
+        self.update_data()
         print("添加操作执行完毕~")
         
 # 2．修改学生成绩：根据输入的学生姓名，修改对应的学生成绩
@@ -68,7 +74,9 @@ class EduManangment:
                 if (0<=chinese<=100) and (0<=math<=100) and (0<=english<=100):
 
                     s.update_s(chinese,math,english)
+                    self.update_data()
                     print("修改操作执行完毕~")
+                    return
                 else:
                      print("请输入正确的成绩数据:(0~100)")
                      return
@@ -83,6 +91,7 @@ class EduManangment:
         for s in self.student_list:
             if name==s.s_name:
                 self.student_list.remove(s)
+                self.update_data()
                 print("删除操作执行完毕！")
                 return
         print("教务系统中尚不存在该同学成绩")
@@ -112,6 +121,13 @@ class EduManangment:
         print(self.menu)
 # 运行系统
     def run(self):
+        try:
+            f=open(r"D:\Python-Project\students_v5.json","r",encoding="UTF-8")
+            self.student_list=json.load(f)
+            f.close()
+        except Exception:
+            self.student_list=[]
+            
         print(f"欢迎使用教务管理系统{self.version}~~ 请按菜单要求进行操作")
         while True:
             self.show_menu()
