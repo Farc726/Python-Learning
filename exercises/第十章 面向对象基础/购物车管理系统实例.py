@@ -34,7 +34,7 @@ class ShoppingCart:
         print("----------------------------------------------------------------")
 # 功能一：添加购物车
     def add_goods(self):
-        name=input("请输入您要添加的商品名称：")
+        name=input("请输入您要添加的商品名称：").strip()
         for s in self.goods_list:
             if s.name==name:
                 print("此商品已在购物车中 请勿重复添加~")
@@ -53,7 +53,7 @@ class ShoppingCart:
             
 # 功能二：修改购物车
     def update_goods(self):
-        name=input("请输入您要修改的商品名称：")
+        name=input("请输入您要修改的商品名称：").strip()
         for s in self.goods_list:
             if s.name==name:
                price=float(input("请输入您要修改的商品价格：")) 
@@ -70,7 +70,7 @@ class ShoppingCart:
         print("修改操作执行完毕~")
 # 功能三：删除购物车
     def delete_goods(self):
-        name=input("请输入您要删除的商品名称：")
+        name=input("请输入您要删除的商品名称：").strip()
         for s in self.goods_list:
             if s.name==name:
                 self.goods_list.remove(s)
@@ -92,23 +92,31 @@ class ShoppingCart:
         print("欢迎使用购物车管理系统")
         while True:
             self.show_menu()
-            order=input("请选择您要进行的操作(1~5):")
-            match order:
-                case "1":
-                    self.add_goods()
-                case "2":
-                    self.update_goods()
-                case "3":
-                    self.delete_goods()
-                case "4":
-                    self.search_goods()
-                case "5":
-                    print("系统已退出~欢迎下次使用~")
-                    break
-                case _:
-                    print("请输入有效数字~")
+            order=input("请选择您要进行的操作(1~5):").strip()
+            try:
+                match order:
+                    case "1":
+                        self.add_goods()
+                    case "2":
+                        self.update_goods()
+                    case "3":
+                        self.delete_goods()
+                    case "4":
+                        self.search_goods()
+                    case "5":
+                        print("系统已退出~欢迎下次使用~")
+                        break
+                    case _:
+                        print("请输入有效数字~")
+            except ValueError:
+                print("数据类型输入错误 请检查后重新输入~")
+            except Exception as e:
+                print("程序运行出现异常，请联系管理员进行处理，异常为：",e)
                     
 # 测试
 if __name__=="__main__":
     shop_cart=ShoppingCart()
     shop_cart.run_system()
+#做出的更改
+#1.异常处理
+#2.输入去除首尾空格 防止因首尾多加空格等而被识别为不同商品
