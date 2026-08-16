@@ -31,11 +31,14 @@ def add_s():
     if name in infor_s:
         print("教务系统中已有此学生信息，请勿重复添加~")
     else:#如不重复-完善内层分数字典
-        #明确外层字典的值也是一个字典
-        infor_s[name]={}
+        #明确外层字典的值也是一个字典 ---在处理异常的时候发现了一个问题
+        #如果后面输入的成绩数据类型错误 这个名字后面的值是一个空字典 在进行添加时会显示重复添加！
+        # 哎~ 把空字典的定义向后移！
+        
         chinese=int(input("请输入该学生的语文成绩："))
         math=int(input("请输入该学生的数学成绩："))
         English=int(input("请输入该学生的英语成绩："))
+        infor_s[name]={}
         infor_s[name]["chinese"]=chinese
         infor_s[name]["math"]=math
         infor_s[name]["English"]=English
@@ -131,58 +134,6 @@ def calc_s():
         print_infor(English_infor,"英语")
         
 
-        
-        
-
-        
-        
-    
-# def calc_s():
-#     if len(infor_s)==0:
-#         print("该系统中无任何学生信息")
-#     else:
-#         chinese_s=[infor_s[name]["chinese"] for name in infor_s]
-#         math_s=[infor_s[name]["math"] for name in infor_s]
-#         English_s=[infor_s[name]["English"] for name in infor_s]
-#         #计算单科成绩最值
-#         max_c=max(chinese_s)
-#         min_c=min(chinese_s)
-#         max_m=max(math_s)
-#         min_m=min(math_s)
-#         max_e=max(English_s)
-#         min_e=min(English_s)
-        
-#         print(f"语文最高分为：{max_c},平均分为:{sum(chinese_s)/len(chinese_s):.2f}")
-#         print(f"数学最高分为：{max_m},平均分为:{sum(math_s)/len(math_s):.2f}")
-#         print(f"英语最高分为：{max_e},平均分为:{sum(English_s)/len(English_s):.2f}")
-#         #寻找得到最值同学的姓名 注意并列的情况
-#         #可不可以把成绩最值做成一个字典 之后 键是成绩的最值 之后 值是列表类型 列表里面是取得最值的学生姓名{100：["Jack","Mary"]}
-#         c_max=[]
-#         c_min=[]
-#         m_max=[]
-#         m_min=[]
-#         e_max=[]
-#         e_min=[]
-        
-#         for name in infor_s:
-#             if infor_s[name]["chinese"]==max_c:
-#                 c_max.append(name)
-#             if infor_s[name]["chinese"]==min_c:
-#                 c_min.append(name)
-#             if infor_s[name]["math"]==max_m:
-#                 m_max.append(name)
-#             if infor_s[name]["math"]==min_m:
-#                 m_min.append(name)
-#             if infor_s[name]["English"]==max_e:
-#                 e_max.append(name)
-#             if infor_s[name]["English"]==min_e:
-#                 e_min.append(name)
-#         print(f"取得语文最高分的同学为：{','.join(c_max)}")
-#         print(f"取得语文最低分的同学为：{','.join(c_min)}")
-#         print(f"取得数学最高分的同学为：{','.join(m_max)}")
-#         print(f"取得数学最低分的同学为：{','.join(m_min)}")
-#         print(f"取得英语最高分的同学为：{','.join(e_max)}")
-#         print(f"取得英语最低分的同学为：{','.join(e_min)}")
 
 
 
@@ -192,24 +143,29 @@ while True:
     show_menu()
 
     order=input("请输入您要进行的操作：")
-    match order:
-        case "1":
-            add_s()
-        case "2":
-            change_s()
-        case "3":
-            del_s()
-        case "4":
-            search_s()
-        case "5":
-            all_s()
-        case "6":
-            calc_s()
-        case "7":
-            print("谢谢使用！ 已退出系统~")
-            break
-        case _:
-            print("请输入合法的数字编号~")
+    try:
+        match order:
+            case "1":
+                add_s()
+            case "2":
+                change_s()
+            case "3":
+                del_s()
+            case "4":
+                search_s()
+            case "5":
+                all_s()
+            case "6":
+                calc_s()
+            case "7":
+                print("谢谢使用！ 已退出系统~")
+                break
+            case _:
+                print("请输入合法的数字编号~")
+    except ValueError:
+        print("输入的数据类型错误 请重新输入~")
+    except Exception:
+        print("程序运行错误请联系管理员进行处理~")
 
 
         

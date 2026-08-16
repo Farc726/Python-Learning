@@ -13,44 +13,52 @@ print("欢迎使用教务管理系统~~")
 menu="""#############################【菜单】#############################
 # 1. 添加学生信息  2. 修改学生信息  3. 删除学生信息  4. 查询学生信息  5. 列出所有学生  6. 统计班级成绩  7. 退出系统   #
 ################################################################"""
-
-infor_s={}
-# 大致结构为:{name:{"chinese":chinese,"math":math,"English":English}}
-
-f=open("D:\Python-Project\教务管理系统\student.json","w","UTF-8")
-infor_s=json.load(f)
-
-
 def show_menu():
     """该函数用于菜单的输出 提示用户操作"""
     print(menu)
 
+#由题意 学生信息靠学生姓名索引 所以考虑用字典存储学生信息
+infor_s={}
+#大致结构为{name:{"chinese":chinese,"math":math,"English":English}}
+# 第一次尝试打开文件
+try:
+    f=open(r"D:\Python-Project\student.json","r",encoding="UTF-8")
+    infor_s=json.load(f)
+    f.close()
+except Exception:
+    infor_s={}
+
+# 进行添加修改删除操作后要更新文件内容--函数
+def update_data():
+    with open("D:\Python-Project\student.json","w",encoding="UTF-8") as f:
+        json.dump(infor_s,f,ensure_ascii=False)
+
 # 核心功能实现函数的编写
 # 1．添加学生信息：根据提示录入学生姓名、语文、数学、英语成绩，录入完成保存到系统中。
 def add_s():
-    
 #输入学生姓名-作为外层字典的键
-    name=input("请输入要录入的学生姓名：")
+    name=input("请输入要录入的学生姓名：").strip()
 #判断是否重复
     if name in infor_s:
         print("教务系统中已有此学生信息，请勿重复添加~")
     else:#如不重复-完善内层分数字典
-        #明确外层字典的值也是一个字典
-        infor_s[name]={}
+        
         chinese=int(input("请输入该学生的语文成绩："))
         math=int(input("请输入该学生的数学成绩："))
         English=int(input("请输入该学生的英语成绩："))
+        #明确外层字典的值也是一个字典
+        infor_s[name]={}
+        
         infor_s[name]["chinese"]=chinese
         infor_s[name]["math"]=math
         infor_s[name]["English"]=English
-        
-        json.dump(infor_s,f)
+        update_data()
     print("添加操作执行完毕~")
     
 # 2．修改学生信息：要求输入要修改的学生姓名，然后再提示输入语文、数学、英语成绩，输入完成后修改学员信息。
 def change_s():
 #输入姓名
-    name=input("请输入要修改的学生姓名：")
+    name=input("请输入要修改的学生姓名：").strip()
 #判断存在
     if name not in infor_s:
         print("系统中无该学生信息 请先进行添加~")
@@ -58,24 +66,24 @@ def change_s():
         infor_s[name]["chinese"]=int(input("请输入修改后的语文成绩："))
         infor_s[name]["math"]=int(input("请输入修改后的数学成绩："))
         infor_s[name]["English"]=int(input("请输入修改后的英语成绩："))
-        json.dump(infor_s,f)
+        update_data()
     print("成绩修改工作执行完毕~")
     
 # 3．删除学生信息：要求输入要删除的学生姓名，根据姓名删除学生信息。
 def del_s():
 #输入姓名
-    name=input("请输入要删除的学生姓名：")
+    name=input("请输入要删除的学生姓名：").strip()
 #判断存在
     if name not in infor_s:
         print("系统中无该学生信息 无需删除~")
     else:
         del infor_s[name]
-        json.dump(infor_s,f)
+        update_data()
     print("学生信息删除工作执行完毕~")
 
 # 4．查询学生信息：要求输入要查询的学生姓名，根据姓名查询学生信息并输出。
 def search_s():
-    name=input("请输入要查询的学生姓名：")
+    name=input("请输入要查询的学生姓名：").strip()
     if name not in infor_s:
         print("系统中无该学生信息")
     else:
@@ -137,9 +145,6 @@ def calc_s():
         print_infor(chinese_infor,"语文")
         print_infor(math_infor,"数学")
         print_infor(English_infor,"英语")
-        
-
-
 
 
 #1.写出整体框架 (靠循环控制输入输出 ==7 -->跳出循环)  (用match case 表选项)
@@ -147,21 +152,26 @@ while True:
     show_menu()
 
     order=input("请输入您要进行的操作：")
-    match order:
-        case "1":
-            add_s()
-        case "2":
-            change_s()
-        case "3":
-            del_s()
-        case "4":
-            search_s()
-        case "5":
-            all_s()
-        case "6":
-            calc_s()
-        case "7":
-            print("谢谢使用！ 已退出系统~")
-            break
-        case _:
-            print("请输入合法的数字编号~")
+    try:
+        match order:
+            case "1":
+                add_s()
+            case "2":
+                change_s()
+            case "3":
+                del_s()
+            case "4":
+                search_s()
+            case "5":
+                all_s()
+            case "6":
+                calc_s()
+            case "7":
+                print("谢谢使用！ 已退出系统~")
+                break
+            case _:
+                print("请输入合法的数字编号~")
+    except ValueError:
+        print("输入的数据类型错误 请重新输入~")
+    except Exception:
+        print("程序运行发生错误，请联系管理员进行处理~")
